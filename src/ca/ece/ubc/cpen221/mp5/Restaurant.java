@@ -22,9 +22,50 @@ public class Restaurant {
     private Double stars;
     private String city;
     private String full_address;
-    private int review_count;
+    private long review_count;
     private String photo_url;
     private List<String> schools;
+    private double latitude;
+    private long price;
+    private List<Review> review;
+
+    public Restaurant(JSONObject jsonObject){
+        open = (Boolean) jsonObject.get("open");
+        url = (String) jsonObject.get("url");
+        longitude = (Double) jsonObject.get("longitude");
+        neighborhoods = jsonArrayToList((JSONArray) jsonObject.get("neighborhoods"));
+        business_id = (String) jsonObject.get("business_id");
+        name = (String) jsonObject.get("name");
+        categories = jsonArrayToList((JSONArray) jsonObject.get("categories"));
+        state = (String) jsonObject.get("state");
+        type = (String) jsonObject.get("type");
+        stars = (double) jsonObject.get("stars");
+        city = (String) jsonObject.get("city");
+        full_address = (String) jsonObject.get("full_address");
+        review_count = (long) jsonObject.get("review_count");
+        photo_url = (String) jsonObject.get("photo_url");
+        schools = jsonArrayToList((JSONArray) jsonObject.get("schools"));
+        latitude = (double) jsonObject.get("latitude");
+        price = (long) jsonObject.get("price");
+        review = new ArrayList<>();
+    }
+
+    public void setReview(Review review){
+        this.review.add(review);
+    }
+
+    private static ArrayList<String> jsonArrayToList(JSONArray jsonArray){
+
+        ArrayList<String> list = new ArrayList<>();
+
+        for(int i=0; i<jsonArray.size(); i++) {
+            String value = (String) jsonArray.get(i);
+            list.add(value);
+        }
+
+        return list;
+    }
+
 
     public List<Review> getReview() {
         return review;
@@ -78,7 +119,7 @@ public class Restaurant {
         return full_address;
     }
 
-    public int getReview_count() {
+    public long getReview_count() {
         return review_count;
     }
 
@@ -94,48 +135,7 @@ public class Restaurant {
         return latitude;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
-    }
-
-    private double latitude;
-    private int price;
-    private List<Review> review;
-
-    public Restaurant(JSONObject jsonObject){
-        open = (Boolean) jsonObject.get("open");
-        url = (String) jsonObject.get("url");
-        longitude = (Double) jsonObject.get("longitude");
-        neighborhoods = jsonArrayToList((JSONArray) jsonObject.get("neighborhoods"));
-        business_id = (String) jsonObject.get("business_id");
-        name = (String) jsonObject.get("name");
-        categories = jsonArrayToList((JSONArray) jsonObject.get("categories"));
-        state = (String) jsonObject.get("state");
-        type = (String) jsonObject.get("type");
-        stars = (double) jsonObject.get("stars");
-        city = (String) jsonObject.get("city");
-        full_address = (String) jsonObject.get("full_address");
-        review_count = (int) jsonObject.get("review_count");
-        photo_url = (String) jsonObject.get("photo_url");
-        schools = jsonArrayToList((JSONArray) jsonObject.get("schools"));
-        latitude = (double) jsonObject.get("latitude");
-        price = (int) jsonObject.get("price");
-        review = new ArrayList<>();
-    }
-
-    public void setReview(Review review){
-        this.review.add(review);
-    }
-
-    private static ArrayList<String> jsonArrayToList(JSONArray jsonArray){
-
-        ArrayList<String> list = new ArrayList<>();
-
-        for(int i=0; i<jsonArray.size(); i++) {
-            String value = (String) jsonArray.get(i);
-            list.add(value);
-        }
-
-        return list;
     }
 }
