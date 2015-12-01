@@ -11,6 +11,18 @@ public class Vote {
     long useful;
     long funny;
 
+    public long getCool() {
+        return cool;
+    }
+
+    public long getUseful() {
+        return useful;
+    }
+
+    public long getFunny() {
+        return funny;
+    }
+
     public Vote(JSONObject jsonVote){
         cool = (long) jsonVote.get("cool");
         useful = (long) jsonVote.get("useful");

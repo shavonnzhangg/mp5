@@ -24,6 +24,79 @@ public class Restaurant {
     private int review_count;
     private String photo_url;
     private String[] schools;
+
+    public List<Review> getReview() {
+        return review;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public String[] getNeighborhoods() {
+        return neighborhoods;
+    }
+
+    public String getBusiness_id() {
+        return business_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String[] getCategories() {
+        return categories;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Double getStars() {
+        return stars;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getFull_address() {
+        return full_address;
+    }
+
+    public int getReview_count() {
+        return review_count;
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public String[] getSchools() {
+        return schools;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
     private double latitude;
     private int price;
     private List<Review> review;

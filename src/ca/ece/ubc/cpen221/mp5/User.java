@@ -6,6 +6,35 @@ import org.json.simple.JSONObject;
 
 public class User {
     private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Vote getVote() {
+        return vote;
+    }
+
+    public int getReview_count() {
+        return review_count;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getAverage_stars() {
+        return average_stars;
+    }
+
     private Vote vote;
     private int review_count;
     private String type;

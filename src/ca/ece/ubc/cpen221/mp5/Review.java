@@ -5,6 +5,38 @@ package ca.ece.ubc.cpen221.mp5;
 import org.json.simple.JSONObject;
 
 public class Review {
+    public String getType() {
+        return type;
+    }
+
+    public String getBusiness_id() {
+        return business_id;
+    }
+
+    public Vote getVote() {
+        return vote;
+    }
+
+    public String getReview_id() {
+        return review_id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public long getStars() {
+        return stars;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
     private String type;
     private String business_id;
     private Vote vote;
