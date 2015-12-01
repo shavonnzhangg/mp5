@@ -3,6 +3,7 @@ package ca.ece.ubc.cpen221.mp5;
 // TODO: Use this class to represent a restaurant.
 // State the rep invariant and abs
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -12,10 +13,10 @@ public class Restaurant {
     private boolean open;
     private String url;
     private double longitude;
-    private String[] neighborhoods;
+    private List<String> neighborhoods;
     private String business_id;
     private String name;
-    private String[] categories;
+    private List<String> categories;
     private String state;
     private String type;
     private Double stars;
@@ -23,7 +24,7 @@ public class Restaurant {
     private String full_address;
     private int review_count;
     private String photo_url;
-    private String[] schools;
+    private List<String> schools;
 
     public List<Review> getReview() {
         return review;
@@ -41,7 +42,7 @@ public class Restaurant {
         return longitude;
     }
 
-    public String[] getNeighborhoods() {
+    public List<String> getNeighborhoods() {
         return neighborhoods;
     }
 
@@ -53,7 +54,7 @@ public class Restaurant {
         return name;
     }
 
-    public String[] getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
@@ -85,7 +86,7 @@ public class Restaurant {
         return photo_url;
     }
 
-    public String[] getSchools() {
+    public List<String> getSchools() {
         return schools;
     }
 
@@ -105,10 +106,10 @@ public class Restaurant {
         open = (Boolean) jsonObject.get("open");
         url = (String) jsonObject.get("url");
         longitude = (Double) jsonObject.get("longitude");
-        neighborhoods = (String[]) jsonObject.get("neighborhoods");
+        neighborhoods = jsonArrayToList((JSONArray) jsonObject.get("neighborhoods"));
         business_id = (String) jsonObject.get("business_id");
         name = (String) jsonObject.get("name");
-        categories = (String[]) jsonObject.get("categories");
+        categories = jsonArrayToList((JSONArray) jsonObject.get("categories"));
         state = (String) jsonObject.get("state");
         type = (String) jsonObject.get("type");
         stars = (double) jsonObject.get("stars");
@@ -116,7 +117,7 @@ public class Restaurant {
         full_address = (String) jsonObject.get("full_address");
         review_count = (int) jsonObject.get("review_count");
         photo_url = (String) jsonObject.get("photo_url");
-        schools = (String[]) jsonObject.get("schools");
+        schools = jsonArrayToList((JSONArray) jsonObject.get("schools"));
         latitude = (double) jsonObject.get("latitude");
         price = (int) jsonObject.get("price");
         review = new ArrayList<>();
@@ -124,5 +125,17 @@ public class Restaurant {
 
     public void setReview(Review review){
         this.review.add(review);
+    }
+
+    private static ArrayList<String> jsonArrayToList(JSONArray jsonArray){
+
+        ArrayList<String> list = new ArrayList<>();
+
+        for(int i=0; i<jsonArray.size(); i++) {
+            String value = (String) jsonArray.get(i);
+            list.add(value);
+        }
+
+        return list;
     }
 }
