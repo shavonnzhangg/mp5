@@ -43,6 +43,7 @@ public class RestaurantDB {
 		// TODO: Implement this method
 		this.setRestaurants(restaurantJSONfilename);
 		this.addReviews(reviewsJSONfilename);
+		this.setUsers(usersJSONfilename);
 	}
 
 	/**
@@ -139,7 +140,7 @@ public class RestaurantDB {
 
                 JSONObject jsonObject = (JSONObject) obj;
 
-                String user_id = (String) jsonObject.get("business_id");
+                String user_id = (String) jsonObject.get("user_id");
 
                 id_users.put(user_id, new User(jsonObject));
 
