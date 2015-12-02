@@ -1,9 +1,5 @@
 grammar Query;
 
-@header {
-package mp5
-}
-
 @members {
     // This method makes the lexer or parser stop running if it encounters
     // invalid input and throw a RuntimeException.
@@ -24,7 +20,12 @@ package mp5
 }
 
 /* Entry point of parser */
-query : orExpr;
+query : orExpr
+    | 'randomReview('STRING')'
+    | 'getRestaurant('STRING')'
+    | 'addRestaurant('STRING')'
+    | 'addUser('STRING')'
+    | 'addReview('STRING')';
 
 /* Have lowest precedence */
 orExpr : andExpr(OR andExpr)*;

@@ -3,7 +3,7 @@ package ca.ece.ubc.cpen221.mp5;
 // TODO: Implement a server that will instantiate a database, 
 // process queries concurrently, etc.
 
-public class RestaurantDBServer {
+public class RestaurantDBServer  {
 
 	/**
 	 * Constructor

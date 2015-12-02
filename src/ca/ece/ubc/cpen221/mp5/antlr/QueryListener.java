@@ -1,6 +1,5 @@
 // Generated from C:/Users/Dooj/Desktop/CPEN 221/mp5/src/ca/ece/ubc/cpen221/mp5/antlr\Query.g4 by ANTLR 4.5.1
 package ca.ece.ubc.cpen221.mp5.antlr;
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
