@@ -1,11 +1,19 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import ca.ece.ubc.cpen221.mp5.antlr.QueryLexer;
+import ca.ece.ubc.cpen221.mp5.antlr.QueryParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 // TODO: This class represents the Restaurant Database.
 // Define the internal representation and 
@@ -20,6 +28,7 @@ public class RestaurantDB {
 	public static void main(String[] args) {
 		RestaurantDB resDB = new RestaurantDB("restaurants.json","reviews.json","users.json");
         System.out.println("done!");
+		resDB.query("");
 	}
 
 	/**
@@ -158,10 +167,19 @@ public class RestaurantDB {
 	 * @param queryString the query from which a set of resturants will be returned
 	 * @return a set of resturants matching the query
 	 */
-	public Set<Restaurant> query(String queryString) {
+	public void query(String queryString) {
 		// TODO: Implement this method
 		// Write specs, etc.
-		return null;
+
+		queryString = "in(\"Telegraph Ave\") && (category(\"Chinese\") || category(\"Italian\")) && price(2..2)";
+
+		CharStream in= new ANTLRInputStream(queryString);
+		QueryLexer lexer = new QueryLexer(in);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		QueryParser parser = new QueryParser(tokens);
+
+		System.out.println(parser.category().STRING());
+		//return null;
 	}
 
 }

@@ -1,13 +1,16 @@
 // Generated from C:/Users/Dooj/Desktop/CPEN 221/mp5/src/ca/ece/ubc/cpen221/mp5/antlr\Query.g4 by ANTLR 4.5.1
 package ca.ece.ubc.cpen221.mp5.antlr;
-import org.antlr.v4.runtime.atn.*;
-import org.antlr.v4.runtime.dfa.DFA;
+
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class QueryParser extends Parser {
@@ -80,6 +83,24 @@ public class QueryParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
+
+	    // This method makes the lexer or parser stop running if it encounters
+	    // invalid input and throw a RuntimeException.
+	    public void reportErrorsAsExceptions() {
+	        //removeErrorListeners();
+
+	        addErrorListener(new ExceptionThrowingErrorListener());
+	    }
+
+	    private static class ExceptionThrowingErrorListener extends BaseErrorListener {
+	        @Override
+	        public void syntaxError(Recognizer<?, ?> recognizer,
+	                Object offendingSymbol, int line, int charPositionInLine,
+	                String msg, RecognitionException e) {
+	            throw new RuntimeException(msg);
+	        }
+	    }
+
 	public QueryParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
@@ -99,11 +120,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitQuery(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitQuery(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -150,11 +166,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitOrExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitOrExpr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -218,11 +229,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitAndExpr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitAndExpr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -296,11 +302,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitAtom(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitAtom(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -387,11 +388,6 @@ public class QueryParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitIn(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitIn(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final InContext in() throws RecognitionException {
@@ -436,11 +432,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitCategory(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitCategory(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -487,11 +478,6 @@ public class QueryParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitName(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitName(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final NameContext name() throws RecognitionException {
@@ -523,7 +509,7 @@ public class QueryParser extends Parser {
 
 	public static class RatingContext extends ParserRuleContext {
 		public TerminalNode LPAREN() { return getToken(QueryParser.LPAREN, 0); }
-		public TerminalNode STRING() { return getToken(QueryParser.STRING, 0); }
+		public TerminalNode RANGE() { return getToken(QueryParser.RANGE, 0); }
 		public TerminalNode RPAREN() { return getToken(QueryParser.RPAREN, 0); }
 		public RatingContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -536,11 +522,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitRating(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitRating(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -555,7 +536,7 @@ public class QueryParser extends Parser {
 			setState(63);
 			match(LPAREN);
 			setState(64);
-			match(STRING);
+			match(RANGE);
 			setState(65);
 			match(RPAREN);
 			}
@@ -573,7 +554,7 @@ public class QueryParser extends Parser {
 
 	public static class PriceContext extends ParserRuleContext {
 		public TerminalNode LPAREN() { return getToken(QueryParser.LPAREN, 0); }
-		public TerminalNode STRING() { return getToken(QueryParser.STRING, 0); }
+		public TerminalNode RANGE() { return getToken(QueryParser.RANGE, 0); }
 		public TerminalNode RPAREN() { return getToken(QueryParser.RPAREN, 0); }
 		public PriceContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -586,11 +567,6 @@ public class QueryParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof QueryListener ) ((QueryListener)listener).exitPrice(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof QueryVisitor ) return ((QueryVisitor<? extends T>)visitor).visitPrice(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -605,7 +581,7 @@ public class QueryParser extends Parser {
 			setState(68);
 			match(LPAREN);
 			setState(69);
-			match(STRING);
+			match(RANGE);
 			setState(70);
 			match(RPAREN);
 			}
@@ -638,8 +614,8 @@ public class QueryParser extends Parser {
 		"\2/*\3\2\2\2/+\3\2\2\2\60\t\3\2\2\2\61\62\7\3\2\2\62\63\7\t\2\2\63\64"+
 		"\7\r\2\2\64\65\7\n\2\2\65\13\3\2\2\2\66\67\7\4\2\2\678\7\t\2\289\7\r\2"+
 		"\29:\7\n\2\2:\r\3\2\2\2;<\7\5\2\2<=\7\t\2\2=>\7\r\2\2>?\7\n\2\2?\17\3"+
-		"\2\2\2@A\7\6\2\2AB\7\t\2\2BC\7\r\2\2CD\7\n\2\2D\21\3\2\2\2EF\7\7\2\2F"+
-		"G\7\t\2\2GH\7\r\2\2HI\7\n\2\2I\23\3\2\2\2\5\33#/";
+		"\2\2\2@A\7\6\2\2AB\7\t\2\2BC\7\b\2\2CD\7\n\2\2D\21\3\2\2\2EF\7\7\2\2F"+
+		"G\7\t\2\2GH\7\b\2\2HI\7\n\2\2I\23\3\2\2\2\5\33#/";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
