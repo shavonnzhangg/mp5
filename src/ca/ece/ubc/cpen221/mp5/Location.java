@@ -13,5 +13,17 @@ public class Location {
 		this.y = y ;
 	}
 	
+<<<<<<< HEAD
 
 }
+=======
+	public double getX (){
+		return this.x ;
+	}
+
+	public double getY (){
+		return this.y ;
+	}
+}
+
+>>>>>>> shavon

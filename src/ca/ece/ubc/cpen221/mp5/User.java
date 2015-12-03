@@ -15,7 +15,11 @@ public class User {
         return vote;
     }
 
+<<<<<<< HEAD
     public long getReview_count() {
+=======
+    public int getReview_count() {
+>>>>>>> shavon
         return review_count;
     }
 
@@ -36,7 +40,11 @@ public class User {
     }
 
     private Vote vote;
+<<<<<<< HEAD
     private long review_count;
+=======
+    private int review_count;
+>>>>>>> shavon
     private String type;
     private String user_id;
     private String name;
@@ -48,7 +56,11 @@ public class User {
 
         vote = new Vote(jsonVote);
 
+<<<<<<< HEAD
         review_count = (long) jsonObject.get("review_count");
+=======
+        review_count = (int) jsonObject.get("review_count");
+>>>>>>> shavon
         type = (String) jsonObject.get("type");
         user_id = (String) jsonObject.get("user_id");
         name = (String) jsonObject.get("name");
