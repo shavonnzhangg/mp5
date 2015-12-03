@@ -1,7 +1,5 @@
 package ca.ece.ubc.cpen221.mp5;
 
-import java.util.Random;
-
 public class Location {
 	private double x;
 	private double y;
@@ -15,5 +13,12 @@ public class Location {
 		this.y = y ;
 	}
 	
+	public double getX (){
+		return this.x ;
+	}
 
+	public double getY (){
+		return this.y ;
+	}
 }
+
