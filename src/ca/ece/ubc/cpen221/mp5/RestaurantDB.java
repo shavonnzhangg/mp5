@@ -20,10 +20,8 @@ public class RestaurantDB {
 	public static void main(String[] args) {
 		RestaurantDB resDB = new RestaurantDB("restaurants.json","reviews.json","users.json");
         System.out.println("done!");
-<<<<<<< HEAD
 		resDB.query("");
-=======
->>>>>>> shavon
+
 	}
 
 	/**
@@ -47,10 +45,7 @@ public class RestaurantDB {
 		// TODO: Implement this method
 		this.setRestaurants(restaurantJSONfilename);
 		this.addReviews(reviewsJSONfilename);
-<<<<<<< HEAD
 		this.setUsers(usersJSONfilename);
-=======
->>>>>>> shavon
 	}
 
 	/**
@@ -147,11 +142,10 @@ public class RestaurantDB {
 
                 JSONObject jsonObject = (JSONObject) obj;
 
-<<<<<<< HEAD
+
                 String user_id = (String) jsonObject.get("user_id");
-=======
-                String user_id = (String) jsonObject.get("business_id");
->>>>>>> shavon
+                String business_id = (String) jsonObject.get("business_id");
+
 
                 id_users.put(user_id, new User(jsonObject));
 
@@ -166,7 +160,6 @@ public class RestaurantDB {
 
 	/**
 	 *
-<<<<<<< HEAD
 	 * @return an unmodifiable list of all restaurants stored in the database
      */
 
@@ -189,16 +182,6 @@ public class RestaurantDB {
 		// TODO: Implement this method
 		// Write specs, etc
 
-
-=======
-	 * @param queryString the query from which a set of resturants will be returned
-	 * @return a set of resturants matching the query
-	 */
-	public Set<Restaurant> query(String queryString) {
-		// TODO: Implement this method
-		// Write specs, etc.
-		return null;
->>>>>>> shavon
 	}
 
 }
