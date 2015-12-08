@@ -1,16 +1,18 @@
 package ca.ece.ubc.cpen221.mp5.statlearning;
 
 import java.util.Set;
-import java.util.ArrayList;
-<<<<<<< HEAD
-import java.util.HashMap;
-=======
 
->>>>>>> shavon
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 
 import ca.ece.ubc.cpen221.mp5.*;
+import ca.ece.ubc.cpen221.mp5.featureFunctions.LinearRegressionFunction;
+import ca.ece.ubc.cpen221.mp5.featureFunctions.Price;
 
 public class Algorithms {
 
@@ -24,73 +26,31 @@ public class Algorithms {
 	public static List<Set<Restaurant>> kMeansClustering(int k, RestaurantDB db) {
 		List<Restaurant> allRestaurants = db.getRestaurants();
 
-<<<<<<< HEAD
-		HashMap<Location, ArrayList<Restaurant>> clusters = new HashMap<Location, ArrayList<Restaurant>>();
-
-		// create k random centroids
-		Random rand = new Random();
-		for (int i = 0; i <= k; i++) {
-			Location cluster = randomLocation();
-			clusters.put(cluster, new ArrayList<Restaurant>());
-		}
-		// Iterate through all restaurants, and calculate the Euclidean distance
-		// between its location
-		// and every cluster
-
-		for (Restaurant x : allRestaurants) {
-			double minDistance = Double.MAX_VALUE;
-			Location assignedCluster = null ;
-			for (Location loc : clusters.keySet()) {
-				double distance = getEuclideanDistance(x, loc);
-				if(distance < minDistance)
-					minDistance = distance ;
-					assignedCluster = loc ;
-			}
-			// group restaurants into clusters, where each cluster contains all
-			// restaurants
-			// closest to the same centroid
-			clusters.get(assignedCluster).add(x) ;
-		}
-
-		// Compute new centroid for each non-empy cluster
-		
-		return null;
-	}
-
-	private static double getEuclideanDistance(Restaurant x, Location loc) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	private static Location randomLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-=======
 		List<Cluster> clusters = null;
 
 		// create k random centroids
-		for (int i = 0; i <= k-1; i++) {
+		for (int i = 0; i <= k - 1; i++) {
 			Cluster cluster = new Cluster(i);
 			Location centroid = randomLocation();
 			cluster.setCentroid(centroid);
 		}
-		
+
 		boolean done = false;
-		//continue to organize restaurants into clusters until centroids do not change
+		// continue to organize restaurants into clusters until centroids do not
+		// change
 		while (!done) {
-			//clear current list of clusters
+			// clear current list of clusters
 			clusters.clear();
 
 			List<Location> lastCentroids = getCentroid(clusters);
-			
-			//for every restaurant, calculate which centroid is closest
-			//add restaurant to cluster containing closest centroid
+
+			// for every restaurant, calculate which centroid is closest
+			// add restaurant to cluster containing closest centroid
 			double distance;
 			int assignedCluster = 0;
 			for (Restaurant r : allRestaurants) {
 				double minDistance = Double.MAX_VALUE;
-				for (int i = 0; i < k-1; i++) {
+				for (int i = 0; i < k - 1; i++) {
 					Cluster c = clusters.get(i);
 					distance = getEuclideanDistance(new Location(r), c.getCentroid());
 					if (distance < minDistance) {
@@ -100,14 +60,14 @@ public class Algorithms {
 				}
 				clusters.get(assignedCluster).addPoint(r);
 			}
-			//for every cluster, find a new centroid
-			Location newCentroid ;
-			for (int i = 0; i < k-1; i++){
+			// for every cluster, find a new centroid
+			Location newCentroid;
+			for (int i = 0; i < k - 1; i++) {
 				newCentroid = getNewCentroid(clusters.get(i).getPoints());
 				clusters.get(i).setCentroid(newCentroid);
 			}
-			
-			//if centroid does not change, done computing
+
+			// if centroid does not change, done computing
 			List<Location> newCentroids = getCentroid(clusters);
 			double d = 0.0;
 			for (int i = 0; i < lastCentroids.size(); i++) {
@@ -116,35 +76,119 @@ public class Algorithms {
 			if (d == 0.0)
 				done = true;
 		}
-		//create a list of restaurant set to return
-		List<Set<Restaurant>> finalClusters = new ArrayList<Set<Restaurant>>() ;
-		for (Cluster cluster : clusters){
-			finalClusters.add(cluster.getPoints()) ;
+		// create a list of restaurant set to return
+		List<Set<Restaurant>> finalClusters = new ArrayList<Set<Restaurant>>();
+		for (Cluster cluster : clusters) {
+			finalClusters.add(cluster.getPoints());
 		}
-		return finalClusters ;
-
+		return finalClusters;
 	}
 
->>>>>>> shavon
-
 	public static String convertClustersToJSON(List<Set<Restaurant>> clusters) {
-		// TODO: Implement this method
-		return null;
+		JSONArray array = new JSONArray();
+
+		for (Set<Restaurant> x : clusters) {
+			for (Restaurant r : x) {
+				JSONObject obj = new JSONObject();
+				obj.put("x", r.getLatitude());
+				obj.put("y", r.getLongitude());
+				obj.put("name", r.getName());
+				obj.put("cluster", r.getCluster());
+				obj.put("weight", 1.0);
+				array.add(obj);
+			}
+		}
+		return array.toJSONString();
 	}
 
 	public static MP5Function getPredictor(User u, RestaurantDB db, MP5Function featureFunction) {
 		// TODO: Implement this method
-		return null;
+
+		// x value is from feature function
+		// y value is rating
+		
+		//variables for calculating sum of squares
+		double sxx = 0;
+		double syy = 0;
+		double sxy = 0;
+		
+		//regression coefficients
+		double a ;
+		double b ;
+		double rSquared ;
+		
+		//average x and  y values
+		double meanx;
+		double meany;
+
+		List<Restaurant> allRestaurants = db.getRestaurants();
+		long rating = 0;
+		double x;
+
+		double xsum = 0.0;
+		int count = 0;
+
+		// find average value of feature function so long that the restaurant is
+		// rated by the user
+		for (Restaurant r : allRestaurants) {
+			List<Review> allReviews = r.getReview();
+			for (Review z : allReviews) {
+				if (!z.getUser_id().equals(u.getUser_id()))
+					allReviews.remove(z);
+				else {
+					xsum = +featureFunction.f(r, db);
+					rating = +z.getStars();
+					count++;
+				}
+			}
+		}
+
+		meanx = xsum / (double) count;
+		meany = (double) (rating / count);
+		
+		// Find user's rating
+		for (Restaurant r : allRestaurants) {
+			List<Review> allReviews = r.getReview();
+			for (Review z : allReviews) {
+				if (!z.getUser_id().equals(u.getUser_id()))
+					allReviews.remove(z);
+				else {
+					x = featureFunction.f(r, db);
+					sxx =+ Math.pow((x - meanx), 2);
+					syy =+ Math.pow((z.getStars()), 2) ;
+					sxy =+ sxx*syy ;
+				}
+			}
+		}
+		
+		b = sxy/sxx ;
+		a = meany - b*meanx ;
+		rSquared = Math.pow(sxy, 2)/(sxx*syy) ;
+		
+		
+		MP5Function LRF = new LinearRegressionFunction(a, b, rSquared) ;
+		return LRF ;
+		
+		
 	}
+	
 
 	public static MP5Function getBestPredictor(User u, RestaurantDB db, List<MP5Function> featureFunctionList) {
 		// TODO: Implement this method
-		return null;
+		double rSquared = 0.0 ;
+		MP5Function bestPredictor = null ;
+		
+		for(MP5Function function : featureFunctionList){
+			LinearRegressionFunction predict = (LinearRegressionFunction) getPredictor(u, db, function) ;
+			if(predict.getR2() > rSquared){
+				bestPredictor = function ;
+				rSquared = predict.getR2();
+			}
+		}
+		
+		return bestPredictor;
 	}
-<<<<<<< HEAD
-}
-=======
-	
+
 	private static List<Location> getCentroid(List<Cluster> clusters) {
 		List<Location> centroids = new ArrayList<Location>();
 		for (Cluster cluster : clusters) {
@@ -169,6 +213,7 @@ public class Algorithms {
 		double yAvg = ySum / (restaurants.size() - 1);
 
 		return new Location(xAvg, yAvg);
+
 	}
 
 	private static double getEuclideanDistance(Location x, Location loc) {
@@ -189,6 +234,5 @@ public class Algorithms {
 
 		return new Location(x, y);
 	}
-
+	
 }
->>>>>>> shavon
