@@ -12,11 +12,7 @@ public class Location {
 		this.x = x ;
 		this.y = y ;
 	}
-	
-<<<<<<< HEAD
 
-}
-=======
 	public double getX (){
 		return this.x ;
 	}
@@ -26,4 +22,4 @@ public class Location {
 	}
 }
 
->>>>>>> shavon
+

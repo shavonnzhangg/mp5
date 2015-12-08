@@ -172,7 +172,7 @@ public class RestaurantDB {
 
 		return Collections.unmodifiableList(restaurants);
 	}
-
+	
 	/**
 	 *
 	 * @param queryString the query from which a set of resturants will be returned

@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Restaurant {
@@ -28,6 +29,7 @@ public class Restaurant {
     private double latitude;
     private long price;
     private List<Review> review;
+    private int cluster ;
 
     public Restaurant(JSONObject jsonObject){
         open = (Boolean) jsonObject.get("open");
@@ -53,6 +55,7 @@ public class Restaurant {
     public void setReview(Review review){
         this.review.add(review);
     }
+    
 
     private static ArrayList<String> jsonArrayToList(JSONArray jsonArray){
 
@@ -65,12 +68,21 @@ public class Restaurant {
 
         return list;
     }
-
+    
 
     public List<Review> getReview() {
         return review;
     }
+    
 
+    public void setCluster(int assignedCluster){
+    	this.cluster = assignedCluster ;
+    }
+    
+    public int getCluster() {
+    	return cluster ;
+    }
+    
     public boolean isOpen() {
         return open;
     }
